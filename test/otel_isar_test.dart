@@ -57,8 +57,8 @@ void main() {
       expect(span.kind, equals(SpanKind.client));
       expect(span.name, equals('isar put users'));
       final attrs = _attrs(span);
-      expect(attrs['db.system'], equals('isar'));
-      expect(attrs['db.operation'], equals('put'));
+      expect(attrs['db.system.name'], equals('isar'));
+      expect(attrs['db.operation.name'], equals('put'));
       expect(attrs['db.collection.name'], equals('users'));
     });
 

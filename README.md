@@ -24,8 +24,8 @@ await tracedIsarWriteTxn(() async {
 
 Each call opens a CLIENT span:
 - name: `isar <op> [<collection>]`
-- `db.system = isar`
-- `db.operation = <op>`
+- `db.system.name = isar`
+- `db.operation.name = <op>`
 - `db.collection.name = <collection>` (when applicable)
 
 Isar uses code-generated collection accessors and doesn't expose

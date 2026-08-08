@@ -11,8 +11,8 @@ const _dbSystem = 'isar';
 Tracer _tracer() => OTel.tracerProvider().getTracer(_tracerName);
 
 /// Generic helper. Opens a CLIENT span named
-/// `isar <operation> [<collection>]` carrying `db.system=isar`,
-/// `db.operation`, and `db.collection.name` (when supplied).
+/// `isar <operation> [<collection>]` carrying `db.system.name=isar`,
+/// `db.operation.name`, and `db.collection.name` (when supplied).
 ///
 /// Isar uses code-generated collection accessors
 /// (`isar.users.put(...)`) so there's no clean interceptor seam;
@@ -30,11 +30,9 @@ Future<R> tracedIsarCall<R>({
     name,
     kind: SpanKind.client,
     attributes: OTel.attributesFromMap(<String, Object>{
-      Database.dbSystem.key: _dbSystem,
-      Database.dbSystemName.key: _dbSystem,
-      Database.dbOperation.key: operation,
-      Database.dbOperationName.key: operation,
-      if (collection != null) Database.dbCollectionName.key: collection,
+      Db.dbSystemName.key: _dbSystem,
+      Db.dbOperationName.key: operation,
+      if (collection != null) Db.dbCollectionName.key: collection,
     }),
   );
   try {
@@ -42,7 +40,7 @@ Future<R> tracedIsarCall<R>({
   } catch (e, st) {
     span.addAttributes(OTel.attributes([
       OTel.attributeString(
-        ErrorResource.errorType.key,
+        ErrorAttributes.errorType.key,
         e.runtimeType.toString(),
       ),
     ]));

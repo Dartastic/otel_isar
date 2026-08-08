@@ -5,14 +5,21 @@ import 'dart:async';
 
 const Symbol _suppressKey = #otel_isar_suppress;
 
+/// Whether Isar instrumentation is suppressed in the current [Zone]
+/// (i.e. the caller is inside [runWithoutIsarInstrumentation] or
+/// [runWithoutIsarInstrumentationAsync]).
 bool isarInstrumentationSuppressed() {
   return Zone.current[_suppressKey] == true;
 }
 
+/// Runs [body] with Isar instrumentation suppressed: `tracedIsarCall`
+/// and the transaction helpers invoke their operation without opening
+/// a span.
 T runWithoutIsarInstrumentation<T>(T Function() body) {
   return runZoned(body, zoneValues: {_suppressKey: true});
 }
 
+/// Async variant of [runWithoutIsarInstrumentation].
 Future<T> runWithoutIsarInstrumentationAsync<T>(
   Future<T> Function() body,
 ) {
