@@ -2,7 +2,7 @@ name: otel_isar
 description: OpenTelemetry instrumentation for `package:isar`. Helpers
   to wrap Isar collection operations and transactions with
   `db.system.name=isar` semconv spans.
-version: 0.2.0
+version: 0.3.0-wip
 repository: https://github.com/dartastic/otel_isar
 homepage: https://dartastic.io
 
